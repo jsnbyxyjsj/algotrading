@@ -11,6 +11,38 @@ from libqoi import mix_and_split
 import signatory as sg
 
 
+### THIS FUNCTION MUST BE FINISHED
+def backtracking(x_true, y_pred, error, stock_units):
+    x = x_true.reshape(-1)
+    y = y_pred.reshape(-1)
+    n_times = x.shape[0]
+    wallet = 0.
+    status = ""
+    action = ""
+    for nth in range(n_times):
+        predicted_val = y[nth]
+        curr_val = x[nth]
+        future_val = x[nth+1]
+        percentage = predicted_val / 100. * error
+        up_val = predicted_val + percentage
+        low_val = predicted_val - percentage
+
+        status = "TOO UNCERTAIN"
+        action="IDLE"
+        if low_val > x_tmp[-1]:
+            status = "INCREASES"
+            mycolor="green"
+            action="BUY"
+        elif up_val < x_tmp[-1]:
+            status = "DECREASES"
+            mycolor="red"
+            action="SELL"
+        print(f"{action}: price {status}: {x_tmp[-1]:.2f} -> {predicted_val:.2}")
+
+    return wallet
+#---
+
+
 n_times = 2000
 window = 10
 sig_depth = 5
@@ -148,6 +180,12 @@ elif up_val < x_tmp[-1]:
     mycolor="red"
     action="SELL"
 print(f"{action}: price {status}: {x_tmp[-1]:.2f} -> {predicted_val:.2}")
+
+
+# Perform BACKTRACKING
+n_stocks = 1.
+money = backtracking(x_tmp[window-1:-1], y_pred, mre, n_stocks)
+print(f"Backtracked strategy on {n_stocks} stocks: {money:.3f}")
 
 x_mean = x_tmp.mean()
 time_to_show = 50
