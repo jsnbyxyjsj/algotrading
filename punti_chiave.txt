@@ -1,0 +1,12 @@
+
+
+
+
+#####################################
+####  CAP 5 ALTRE TECNICHE	#####
+#####################################
+ - Utilizzo di 'statsmodel' per decomporre serie temporali in
+	trend, stagionalita' e rumore.
+ - dividere la medesima serie in diversi intervalli temporali e analizzare
+	ciascuna al fine di confermare risultati;
+
